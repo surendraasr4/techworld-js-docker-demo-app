@@ -3,6 +3,7 @@ pipeline{
         registry= "hub.docker.com"
         registryCredential = 'docker'
         dockerImage = ''
+        imagename= "app"
     }
     agent any
     stages{
@@ -14,7 +15,7 @@ pipeline{
         stage ('Docker build'){
             steps{
                 script{
-                    dockerImage = docker.build registry + ":$GIT_COMMIT"
+                    dockerImage = docker.build imagename
                 }
             }
         }
