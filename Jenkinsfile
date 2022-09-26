@@ -1,41 +1,42 @@
-pipeline {
-  environment {
-    imagename = "surendradockerhubreg/hashedin"
-    registryCredential = 'docker'
-    dockerImage = ''
-  }
-  agent any
-  stages {
-    stage('Cloning Git') {
-      steps {
-        git([url: 'https://github.com/surendraasr4/techworld-js-docker-demo-app.git', branch: 'master', credentialsId: 'githubcreds3'])
-
-      }
+pipeline{
+    environment{
+        registry= "surendradockerhubreg/hashedin"
+        registryCredential = 'docker'
+        dockerImage = ''
     }
-    stage('Building image') {
-      steps{
-        script {
-          dockerImage = docker.build imagename
+    agent any
+    stages{
+        stage('git checkoutn'){
+            steps{
+                git credentials Id: 'cred',
+                url: 'https://github.com/surendraasr4/techworld-js-docker-demo-app.git'
+            }
         }
-      }
-    }
-    stage('Deploy Image') {
-      steps{
-        script {
-          docker.withRegistry( '', registryCredential ) {
-            dockerImage.push("$BUILD_NUMBER")
-             dockerImage.push('latest')
-
-          }
+        stage ('Docker build'){
+            steps{
+                script{
+                    dockerImage = docker.build registry + ":$GIT_COMMIT"
+                }
+            }
         }
-      }
-    }
-    stage('Remove Unused docker image') {
-      steps{
-        sh "docker rmi $imagename:$BUILD_NUMBER"
-         sh "docker rmi $imagename:latest"
+        stage ('Approval to push docker image'){
+            input{
+                message "Do you want to push docker image to docker hub?"
+            }
+                steps {
+                    sh 'echo "Pushing docker image"'
 
-      }
+                    }
+            }
+        stage('Docker image push'){
+            steps{
+                script{
+                    docker.withRegistry( '',registryCredential ) {
+dockerImage.push()
+                    }
+                }
+            }
+        }
+                                                                  
     }
-  }
 }
