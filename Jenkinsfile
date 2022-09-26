@@ -32,7 +32,7 @@ pipeline{
                 script{
                     sh 'docker login -u surendradockerhubreg -p Sunrise.123 https://hub.docker.com/'
                     sh 'docker tag app:latest surendradockerhubreg/hashedin:1.1'
-                    sh 'docker push surendradockerhubreg/hashedin:1.1 '
+                    sh 'docker push surendradockerhubreg/hashedin:1.1'
                     }
                 }
             }
@@ -40,4 +40,4 @@ pipeline{
                                                                   
     }
 }
-}
+
