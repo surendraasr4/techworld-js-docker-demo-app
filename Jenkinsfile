@@ -1,6 +1,6 @@
 pipeline{
     environment{
-        registry= "surendradockerhubreg/hashedin"
+        registry= "https://hub.docker.com/"
         registryCredential = 'docker'
         dockerImage = ''
     }
