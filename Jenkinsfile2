@@ -12,6 +12,8 @@ pipeline {
     stage('ApprovalForDev') {
         steps {
             script {
+                     def deploymentDelay = input id: 'Deploy', message: 'Deploy to dev?', submitter: 'admin,manager', parameters
+                    sleep time: deploymentDelay.toInteger(), unit: 'HOURS'
         }
     } 
         stage('Dev') {
