@@ -6,7 +6,7 @@ pipeline {
         stage('git checkout'){
             steps{
                 git credentialId: 'cred',
-                url: 'https://gitlab.com/surendraasr4/techworld-js-docker-demo-app.git'
+                url: 'https://github.com/surendraasr4/techworld-js-docker-demo-app.git'
             }
         }
     stage('ApprovalForDev') {
@@ -37,4 +37,5 @@ pipeline {
                     echo"${CURRENT_ENV}"
                 }
             }
-        }                                        
+        }
+    }    
