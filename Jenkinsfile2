@@ -5,7 +5,7 @@ pipeline {
     stages {
         stage('git checkout'){
             steps{
-                git credentialId: 'cred',
+                git credentialId: 'githubcred',
                 url: 'https://github.com/surendraasr4/techworld-js-docker-demo-app.git'
             }
         }
