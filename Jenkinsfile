@@ -15,7 +15,7 @@ pipeline{
         stage ('Docker build'){
             steps{
                 script{
-                    dockerImage = docker.build registry + ":$GIT_COMMIT"
+                    dockerImage = docker.build + ":$GIT_COMMIT"
                 }
             }
         }
