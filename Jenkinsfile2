@@ -1,0 +1,40 @@
+pipeline {
+    agent {
+        label ''
+    }
+    stages {
+        stage('git checkout'){
+            steps{
+                git credentialId: 'cred',
+                url: 'https://gitlab.com/surendraasr4/techworld-js-docker-demo-app.git'
+            }
+        }
+    stage('ApprovalForDev') {
+        steps {
+            script {
+        }
+    } 
+        stage('Dev') {
+            steps {
+                script {
+                    def CURRENT_ENV = 'DEV'
+                    echo "${CURRENT_ENV}"
+                }
+            }
+        }
+    stage('ApprovalForQA') {
+        steps {
+            script {
+                def deploymentDelay = input id: 'Deploy', message: 'Deploy to production?', submitter: 'admin,manager', parameters
+                    sleep time: deploymentDelay.toInteger(), unit: 'HOURS'
+            }
+        }
+    }
+        stage('QA') {
+            steps {
+                script {
+                    def CURRENT_ENV = "QA"
+                    echo"${CURRENT_ENV}"
+                }
+            }
+        }                                        
