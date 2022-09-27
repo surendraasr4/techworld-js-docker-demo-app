@@ -9,7 +9,7 @@ pipeline{
     stages{
         stage('git checkout'){
             steps{
-                git([url: 'https://github.com/surendraasr4/techworld-js-docker-demo-app.git', branch: 'master', credentialsId: 'githubcred'])
+                git([url: 'https://github.com/surendraasr4/techworld-js-docker-demo-app.git', branch: 'bug-one', credentialsId: 'githubcred'])
             }
         }
         stage ('Docker build'){
