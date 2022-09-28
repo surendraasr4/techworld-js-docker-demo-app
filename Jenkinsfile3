@@ -1,0 +1,39 @@
+pipeline {
+    agent {
+        label ''
+    }
+    stages {
+        stage('DEV') {
+            steps {
+                script {
+                    echo "surendrareddy"
+                }
+            }
+        }
+        stage('UAT') {
+            steps {
+                script {
+                    echo "surendrareddy"
+                }
+            }
+        }
+        stage('PROD') {
+            steps {
+                script {
+                    echo "surendrareddy"
+                }
+            }
+        }
+    }
+    post {
+        success {
+            echo 'Job has been successfully built'
+        }
+
+        failure {
+            echo 'Job has failed! Please check the job console!'
+        }
+
+    }
+    
+}
