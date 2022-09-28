@@ -1,21 +1,19 @@
 pipeline {
     agent {
-    label ''
+        label ''
     }
     stages {
         stage('git checkout'){
             steps{
-                git credentialId: 'githubcred',
-                url: 'https://github.com/surendraasr4/techworld-js-docker-demo-app.git'
+                git credentialId: 'cred',
+                url: 'https://gitlab.com/surendraasr4/techworld-js-docker-demo-app.git'
             }
         }
-    //stage('ApprovalForDev') {
-      //  steps {
-        //    script {
-          //           def deploymentDelay = input id: 'Deploy', message: 'Deploy to dev?', submitter: 'admin,manager', parameters
-            //        sleep time: deploymentDelay.toInteger(), unit: 'HOURS'
-        //}
-    //}
+    stage('ApprovalForDev') {
+        steps {
+            script {
+        }
+    } 
         stage('Dev') {
             steps {
                 script {
@@ -40,6 +38,48 @@ pipeline {
                 }
             }
         }
-    }    
-}
+    stage('ApprovalForUAT') {
+        steps {
+            script {
+                def 'deploymentDelay = input id: 'Deploy', message: 'Deploy to production?', submitter: 'admin,manager', parameters
+                     sleep time: deploymentDelay.toInteger(), unit: 'HOURS'
+            }
+        }
+    }
+    stage('UAT') {
+            steps {
+                script {
+                    def CURRENT_ENV = "UAT"
+                    echo"${CURRENT_ENV}"
+                }
+            }
+        }
+        stage('ApprovalForPROD') {
+        steps {
+            script {
+                def 'deploymentDelay = input id: 'Deploy', message: 'Deploy to production?', submitter: 'admin,manager', parameters
+                     sleep time: deploymentDelay.toInteger(), unit: 'HOURS'
+            }
+        }
+    }                                         
+        stage('PROD') {
+            steps {
+                script {
+                    def CURRENT_ENV = "PROD"
+                    echo"${CURRENT_ENV}"
+                }
+            }
+        }
+    }
+    post {
+        success {
+            echo 'Job has been successfully built'
+        }
 
+        failure {
+            echo 'Job has failed! Please check the job console!'
+        }
+
+    }
+    
+}
